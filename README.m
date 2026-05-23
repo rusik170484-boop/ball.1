@@ -13,24 +13,23 @@ class GameSprite(sprite.Sprite):
 class Player(GameSprite):
     def update_l(self):
         keys = key.get_pressed()
-        if keys[K_d] and self.rect.x < 700 - self.rect.width - 5:
-            self.rect.x += self.speed
-        if keys[K_a] and self.rect.x > 5:
-            self.rect.x -= self.speed
+        if keys[K_w] and self.rect.y < 500 - self.rect.height - 5:
+            self.rect.y += self.speed
+        if keys[K_s] and self.rect.y > 5:
+            self.rect.y -= self.speed
     def update_r(self):
         keys = key.get_pressed()
-        if keys[K_d] and self.rect.x < 700 - self.rect.width - 500:
-            self.rect.x += self.speed
-        if keys[K_a] and self.rect.x > 5:
-            self.rect.x -= self.speed    
+        if keys[K_UP] and self.rect.y < 500 - self.rect.height - 5:
+            self.rect.y += self.speed
+        if keys[K_DOWN] and self.rect.y > 5:
+            self.rect.y -= self.speed
 
 window = display.set_mode((700, 500))
 display.set_caption('Пинг понг')
-palka1 = ('Без названия.png')
-palka2 = ()
-hero = ('', 500 - 80 - 5,700 // 2, 5,(60, 80))
-
-
+########################### 
+racketl = Player('racket.png',  175, 30, 5,(30, 150))
+racketr = Player('racket.png',  175, 640, 5,(30, 150))
+###########################
 clock = time.Clock()
 FPS = 60
 run = True
@@ -45,12 +44,13 @@ while run:
     for e  in event.get():
         if e.type == QUIT:
             run = False
-    window.blit(background,(0, 0))
-    draw_lost(lost)
-    draw_score(0)
+    window.fill((200, 255, 255))
     if not finish:
-        update_l()
-        update_r()
+        ###########################
+        racketl.reset()
+        racketr.reset()
+        racketl.update_l()
+        racketr.update_r()
+        ###########################
     display.update() 
     clock.tick(60)
-
