@@ -10,32 +10,26 @@ class GameSprite(sprite.Sprite):
         self.rect.x = player_x
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
-
 class Player(GameSprite):
-    def __init__(self, player_image, player_y, player_x, player_speed, size):
-        super().__init__(player_image, player_y, player_x, player_speed, size)
-        self.ammo = 5
-        self.last_reload = 0
-        self.is_reloading = False
     def update_l(self):
         keys = key.get_pressed()
-        if keys[K_d] and self.rect.x < 500 - self.rect.height - 5:
+        if keys[K_d] and self.rect.x < 700 - self.rect.width - 5:
             self.rect.x += self.speed
         if keys[K_a] and self.rect.x > 5:
             self.rect.x -= self.speed
-        if keys[K_SPACE]:
-            self.fire()
     def update_r(self):
         keys = key.get_pressed()
-        if keys[K_d] and self.rect.x < 500 - self.rect.height - 5:
+        if keys[K_d] and self.rect.x < 700 - self.rect.width - 500:
             self.rect.x += self.speed
         if keys[K_a] and self.rect.x > 5:
-            self.rect.x -= self.speed
-        if keys[K_SPACE]:
-            self.fire()        
+            self.rect.x -= self.speed    
 
 window = display.set_mode((700, 500))
 display.set_caption('Пинг понг')
+palka1 = ('Без названия.png')
+palka2 = ()
+hero = ('', 500 - 80 - 5,700 // 2, 5,(60, 80))
+
 
 clock = time.Clock()
 FPS = 60
@@ -55,6 +49,8 @@ while run:
     draw_lost(lost)
     draw_score(0)
     if not finish:
-        pass
+        update_l()
+        update_r()
     display.update() 
     clock.tick(60)
+
